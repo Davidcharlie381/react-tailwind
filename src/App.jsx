@@ -32,7 +32,7 @@ function App() {
   return (
     <div>
       <header className="bg-red-300 p-5">
-        <h3 className="text-[#333] text-2xl font-bold">Co</h3>
+        <h3 className="text-[#333] text-2xl font-bold">Friends</h3>
       </header>
 
       <form
@@ -63,18 +63,30 @@ function App() {
         {contacts.length > 0
           ? contacts.map((contact) => {
               return (
-                <div
-                  key={contact.id}
-                  className="p-4 flex justify-between bg-gray-300"
-                >
-                  {contact.name}
-                  <button
-                    onClick={() => handleDelete(contact.id)}
-                    className="bg-indigo-400 p-2 rounded-md text-white"
-                  >
-                    Delete
-                  </button>
-                </div>
+                // <>
+                //   {!isEditing ? (
+                //     <div
+                //       key={contact.id}
+                //       className="p-4 flex justify-between bg-gray-300"
+                //     >
+                //       {contact.name}
+                //       <div className="flex gap-3">
+                //         <button className="bg-indigo-400 p-2 rounded-md text-white">
+                //           Edit
+                //         </button>
+                //         <button
+                //           onClick={() => handleDelete(contact.id)}
+                //           className="bg-indigo-400 p-2 rounded-md text-white"
+                //         >
+                //           Delete
+                //         </button>
+                //       </div>
+                //     </div>
+                //   ) : (
+                //     "Editing"
+                //   )}
+                // </>
+                <Friend contact={contact} key={contact.id} />
               );
             })
           : "No friends, sadly. 😥"}
@@ -82,5 +94,67 @@ function App() {
     </div>
   );
 }
+
+const Friend = ({ contact }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  return (
+    <>
+      {!isEditing ? (
+        <div
+          key={contact.id}
+          className="p-4 m-2 flex justify-between bg-gray-300"
+        >
+          {contact.name}
+          <div className="flex gap-3">
+            <button
+              className="bg-indigo-400 p-2 rounded-md text-white"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => handleDelete(contact.id)}
+              className="bg-indigo-400 p-2 rounded-md text-white"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ) : (
+        <Editing setIsEditing={setIsEditing} contact={contact} />
+      )}
+    </>
+  );
+};
+
+const Editing = ({ setIsEditing, contact }) => {
+  const [name, setName] = useState(contact.name);
+
+  const handleSave = () => {};
+
+  return (
+    <div className="flex gap-3 justify-between p-4 m-2">
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Enter new name"
+        className="border-2 rounded-md border-slate-400 p-3"
+      />
+      <div className="flex gap-3">
+        <button
+          onClick={() => setIsEditing(false)}
+          className="bg-indigo-400 p-2 rounded-md text-white"
+        >
+          Cancel
+        </button>
+        <button className="bg-indigo-400 p-2 rounded-md text-white">
+          Save
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default App;
