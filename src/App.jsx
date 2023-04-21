@@ -116,6 +116,7 @@ const Editing = ({ setIsEditing, contact }) => {
     // this works, but is bad practice. Shouldn't directly assign a value to an object in state
 
     contact.name = name;
+    setIsEditing(false)
   };
 
   return (
