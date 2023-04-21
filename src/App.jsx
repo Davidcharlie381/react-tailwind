@@ -27,9 +27,8 @@ function App() {
 
   const handleDelete = (id) => {
     setContacts(
-      contacts.filter((contact) => contact.id !== id);
+      contacts.filter((contact) => contact.id !== id)
       )
-    );
   };
 
   return (
