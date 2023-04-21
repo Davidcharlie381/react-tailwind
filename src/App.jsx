@@ -1,12 +1,12 @@
 import { useRef } from "react";
 import { useState } from "react";
 
-const users = [
-  { id: 1, name: "Sani" },
-  { id: 2, name: "Sani" },
-  { id: 3, name: "Sani" },
-  { id: 4, name: "Sani" },
-];
+// const users = [
+//   { id: 1, name: "Sani" },
+//   { id: 2, name: "Sani" },
+//   { id: 3, name: "Sani" },
+//   { id: 4, name: "Sani" },
+// ];
 
 function App() {
   const [id, setId] = useState(0);
@@ -63,30 +63,11 @@ function App() {
         {contacts.length > 0
           ? contacts.map((contact) => {
               return (
-                // <>
-                //   {!isEditing ? (
-                //     <div
-                //       key={contact.id}
-                //       className="p-4 flex justify-between bg-gray-300"
-                //     >
-                //       {contact.name}
-                //       <div className="flex gap-3">
-                //         <button className="bg-indigo-400 p-2 rounded-md text-white">
-                //           Edit
-                //         </button>
-                //         <button
-                //           onClick={() => handleDelete(contact.id)}
-                //           className="bg-indigo-400 p-2 rounded-md text-white"
-                //         >
-                //           Delete
-                //         </button>
-                //       </div>
-                //     </div>
-                //   ) : (
-                //     "Editing"
-                //   )}
-                // </>
-                <Friend contact={contact} key={contact.id} />
+                <Friend
+                  contact={contact}
+                  key={contact.id}
+                  handleDelete={handleDelete}
+                />
               );
             })
           : "No friends, sadly. 😥"}
@@ -95,7 +76,7 @@ function App() {
   );
 }
 
-const Friend = ({ contact }) => {
+const Friend = ({ contact, handleDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -131,7 +112,11 @@ const Friend = ({ contact }) => {
 const Editing = ({ setIsEditing, contact }) => {
   const [name, setName] = useState(contact.name);
 
-  const handleSave = () => {};
+  const handleSave = () => {
+    // this works, but is bad practice. Shouldn't directly assign a value to an object in state
+
+    contact.name = name;
+  };
 
   return (
     <div className="flex gap-3 justify-between p-4 m-2">
@@ -149,7 +134,10 @@ const Editing = ({ setIsEditing, contact }) => {
         >
           Cancel
         </button>
-        <button className="bg-indigo-400 p-2 rounded-md text-white">
+        <button
+          className="bg-indigo-400 p-2 rounded-md text-white"
+          onClick={handleSave}
+        >
           Save
         </button>
       </div>
