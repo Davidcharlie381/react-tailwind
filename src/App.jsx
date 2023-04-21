@@ -26,9 +26,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    setContacts(
-      contacts.filter((contact) => contact.id !== id)
-      )
+    setContacts(contacts.filter((contact) => contact.id !== id));
   };
 
   return (
@@ -62,22 +60,24 @@ function App() {
       </form>
 
       <div className="mx-auto w-[88%] h-screen">
-        {contacts.map((contact) => {
-          return (
-            <div
-              key={contact.id}
-              className="p-4 flex justify-between bg-gray-300"
-            >
-              {contact.name}
-              <button
-                onClick={() => handleDelete(contact.id)}
-                className="bg-indigo-400 p-2 rounded-md text-white"
-              >
-                Delete
-              </button>
-            </div>
-          );
-        })}
+        {contacts.length > 0
+          ? contacts.map((contact) => {
+              return (
+                <div
+                  key={contact.id}
+                  className="p-4 flex justify-between bg-gray-300"
+                >
+                  {contact.name}
+                  <button
+                    onClick={() => handleDelete(contact.id)}
+                    className="bg-indigo-400 p-2 rounded-md text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              );
+            })
+          : "No friends, sadly. 😥"}
       </div>
     </div>
   );
